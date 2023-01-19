@@ -1,11 +1,16 @@
 package com.example.lightweight;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.lightweight.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Random;
 
@@ -16,31 +21,55 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout back_biceps_day;
     LinearLayout shoulder_triceps_day;
 
+    BottomNavigationView topNavigatonView;
+
     int maxRandWelcomeText = 4;
     int minRandWelcomeText = 1;
+
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        replaceFragment(new HomeFragment());
 
         welcome_text = findViewById(R.id.welcome_text);
         chest_day = findViewById(R.id.chest_day);
         back_biceps_day = findViewById(R.id.back_biceps_day);
-        chest_day = findViewById(R.id.shoulder_triceps_day);
+        shoulder_triceps_day = findViewById(R.id.shoulder_triceps_day);
 
         getRandomWelcomeText();
 
-        chest_day.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        topNavigatonView = findViewById(R.id.topNavigatonView);
+        topNavigatonView.setOnItemSelectedListener(item -> {
+
+            switch (item.getItemId()) {
+
+                case R.id.home:
+                    replaceFragment(new HomeFragment());
+                    break;
+
+                case R.id.pass:
+                    replaceFragment(new PassFragment());
+                    break;
 
             }
+
+            return true;
         });
 
 
-
     }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
+    }
+
 
     private void getRandomWelcomeText() {
 
