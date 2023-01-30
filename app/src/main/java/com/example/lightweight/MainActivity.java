@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,15 +18,15 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView welcome_text;
-    LinearLayout chest_day;
-    LinearLayout back_biceps_day;
-    LinearLayout shoulder_triceps_day;
-
+//    TextView welcome_text;
+    LinearLayout chest_day_button;
+//    LinearLayout back_biceps_day_button;
+//    LinearLayout shoulder_triceps_day_button;
+//
     BottomNavigationView topNavigatonView;
-
-    int maxRandWelcomeText = 4;
-    int minRandWelcomeText = 1;
+//
+//    int maxRandWelcomeText = 4;
+//    int minRandWelcomeText = 1;
 
     ActivityMainBinding binding;
 
@@ -35,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
 
-        welcome_text = findViewById(R.id.welcome_text);
-        chest_day = findViewById(R.id.chest_day);
-        back_biceps_day = findViewById(R.id.back_biceps_day);
-        shoulder_triceps_day = findViewById(R.id.shoulder_triceps_day);
-
-        getRandomWelcomeText();
+//        welcome_text = findViewById(R.id.welcome_text);
+        chest_day_button = findViewById(R.id.chest_day_button);
+//        back_biceps_day_button = findViewById(R.id.back_biceps_day_button);
+//        shoulder_triceps_day_button = findViewById(R.id.back_biceps_day_button);
+//
+//        getRandomWelcomeText();
 
         topNavigatonView = findViewById(R.id.topNavigatonView);
         topNavigatonView.setOnItemSelectedListener(item -> {
@@ -61,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        chest_day_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ChestDayActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -71,22 +81,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void getRandomWelcomeText() {
+//    private void getRandomWelcomeText() {
+//
+//        int welcomeTextRandNum = new Random().nextInt(maxRandWelcomeText - minRandWelcomeText + 1) + minRandWelcomeText;
+//
+//        if (welcomeTextRandNum == 1) {
+//            welcome_text.setText("Hello King! 👑");
+//        }
+//        if (welcomeTextRandNum == 2) {
+//            welcome_text.setText("Yeah Buddy!");
+//        }
+//        if (welcomeTextRandNum == 3) {
+//            welcome_text.setText("Lightweight, Babe!!!");
+//        }
+//        if (welcomeTextRandNum == 4) {
+//            welcome_text.setText("Nice to see you again, Chad.");
+//        }
+//
+//    }
 
-        int welcomeTextRandNum = new Random().nextInt(maxRandWelcomeText - minRandWelcomeText + 1) + minRandWelcomeText;
-
-        if (welcomeTextRandNum == 1) {
-            welcome_text.setText("Hello King! 👑");
-        }
-        if (welcomeTextRandNum == 2) {
-            welcome_text.setText("Yeah Buddy!");
-        }
-        if (welcomeTextRandNum == 3) {
-            welcome_text.setText("Lightweight, Babe!!!");
-        }
-        if (welcomeTextRandNum == 4) {
-            welcome_text.setText("Nice to see you again, Chad.");
-        }
-
-    }
 }

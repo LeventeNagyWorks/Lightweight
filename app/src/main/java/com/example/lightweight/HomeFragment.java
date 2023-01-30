@@ -1,5 +1,6 @@
 package com.example.lightweight;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,9 +20,9 @@ import java.util.Random;
 public class HomeFragment extends Fragment {
 
     TextView welcome_text;
-    LinearLayout chest_day;
-    LinearLayout back_biceps_day;
-    LinearLayout shoulder_triceps_day;
+    LinearLayout chest_day_button;
+    LinearLayout back_biceps_day_button;
+    LinearLayout shoulder_triceps_day_button;
 
     int maxRandWelcomeText = 4;
     int minRandWelcomeText = 1;
@@ -73,10 +74,19 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         welcome_text = view.findViewById(R.id.welcome_text);
-        chest_day = view.findViewById(R.id.chest_day);
-        back_biceps_day = view.findViewById(R.id.back_biceps_day);
-        shoulder_triceps_day = view.findViewById(R.id.shoulder_triceps_day);
+        chest_day_button = view.findViewById(R.id.chest_day_button);
+        back_biceps_day_button = view.findViewById(R.id.back_biceps_day_button);
+        shoulder_triceps_day_button = view.findViewById(R.id.shoulder_triceps_day_button);
 
         getRandomWelcomeText();
+
+//        chest_day_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, ChestDayActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
     }
 }

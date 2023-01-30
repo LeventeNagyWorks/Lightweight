@@ -41,7 +41,7 @@
                 android:textSize="22dp" />
 
             <LinearLayout
-                android:id="@+id/chest_day"
+                android:id="@+id/chest_day_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="30dp"
@@ -62,7 +62,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/back_biceps_day"
+                android:id="@+id/back_biceps_day_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="30dp"
@@ -91,7 +91,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/shoulder_triceps_day"
+                android:id="@+id/shoulder_triceps_day_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="30dp"
