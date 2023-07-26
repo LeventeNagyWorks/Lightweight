@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
     <color name="chest_day">#B33030</color>
     <color name="back_biceps_day">#125B50</color>
     <color name="shoulder_triceps_day">#6F1AB6</color>
