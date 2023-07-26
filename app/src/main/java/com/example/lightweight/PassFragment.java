@@ -1,12 +1,25 @@
 package com.example.lightweight;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +27,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class PassFragment extends Fragment {
+
+    TextView textDateToday;
+    TextView textDatePassExpires;
+    AppCompatButton btnPassBought;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,7 +75,47 @@ public class PassFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_pass, container, false);
+
+        textDateToday = view.findViewById(R.id.textDateToday);
+        textDatePassExpires = view.findViewById(R.id.textDatePassExpires);
+        btnPassBought = view.findViewById(R.id.btnPassBought);
+
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy. MM. dd.");
+        String formattedCurrentDate = currentDate.format(formatter);
+        textDateToday.setText(formattedCurrentDate);
+
+        btnPassBought.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LocalDate today = LocalDate.now();
+                LocalDate futureDate = today.plusDays(30);
+                String formattedFutureDate = futureDate.format(formatter);
+                textDatePassExpires.setText(String.valueOf(formattedFutureDate));
+            }
+
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pass, container, false);
+        return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("textDatePassExpires", textDatePassExpires.getText().toString());
+        editor.apply();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String textDatePassExpiresValue = prefs.getString("textDatePassExpires", "");
+        textDatePassExpires.setText(textDatePassExpiresValue);
     }
 }
