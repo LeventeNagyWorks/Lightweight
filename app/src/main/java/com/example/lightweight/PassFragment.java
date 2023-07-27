@@ -1,5 +1,6 @@
 package com.example.lightweight;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -31,6 +33,8 @@ public class PassFragment extends Fragment {
     TextView textDateToday;
     TextView textDatePassExpires;
     AppCompatButton btnPassBought;
+    AppCompatButton btnSetDateExpires;
+    DatePickerDialog datePickerDialog;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,6 +85,7 @@ public class PassFragment extends Fragment {
         textDateToday = view.findViewById(R.id.textDateToday);
         textDatePassExpires = view.findViewById(R.id.textDatePassExpires);
         btnPassBought = view.findViewById(R.id.btnPassBought);
+        btnSetDateExpires = view.findViewById(R.id.btnSetDateExpires);
 
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy. MM. dd.");
@@ -97,6 +102,8 @@ public class PassFragment extends Fragment {
             }
 
         });
+
+        initDatePicker();
 
         // Inflate the layout for this fragment
         return view;
@@ -117,5 +124,32 @@ public class PassFragment extends Fragment {
         SharedPreferences prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
         String textDatePassExpiresValue = prefs.getString("textDatePassExpires", "");
         textDatePassExpires.setText(textDatePassExpiresValue);
+    }
+
+    private void initDatePicker() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                String date = makeDateString(day, month, year);
+            }
+        };
+    }
+
+    private String makeDateString(int day, int month, int year) {
+        return getMonthFormat(month) + ". " + day + ". " + year + ".";
+    }
+
+    private String getMonthFormat(int month)
+    {
+        if (month == 1) return "JAN";
+        if (month == 2) return "FEB";
+
+        return "JAN";
+    }
+
+    public void openDatePicker(View view) {
+
     }
 }

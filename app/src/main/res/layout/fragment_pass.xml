@@ -104,12 +104,22 @@
                 android:background="@drawable/submit_btn"
                 android:text="Pass just bought"
                 android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnSetDateExpires"
+                app:layout_constraintHorizontal_bias="0.52"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textDatePassExpires">
+                app:layout_constraintTop_toBottomOf="@+id/textDatePassExpires" />
 
-            </androidx.appcompat.widget.AppCompatButton>
-
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSetDateExpires"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
+                android:background="@android:color/transparent"
+                android:drawableBottom="@drawable/ic_baseline_edit_calendar_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textDatePassExpires"
+                android:onClick="openDatePicker"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
