@@ -18,15 +18,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-//    TextView welcome_text;
-    LinearLayout chest_day_button;
-//    LinearLayout back_biceps_day_button;
-//    LinearLayout shoulder_triceps_day_button;
-//
     BottomNavigationView topNavigatonView;
-//
-//    int maxRandWelcomeText = 4;
-//    int minRandWelcomeText = 1;
 
     ActivityMainBinding binding;
 
@@ -36,13 +28,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
-
-//        welcome_text = findViewById(R.id.welcome_text);
-        chest_day_button = findViewById(R.id.chest_day_button);
-//        back_biceps_day_button = findViewById(R.id.back_biceps_day_button);
-//        shoulder_triceps_day_button = findViewById(R.id.back_biceps_day_button);
-//
-//        getRandomWelcomeText();
 
         topNavigatonView = findViewById(R.id.topNavigatonView);
         topNavigatonView.setOnItemSelectedListener(item -> {
@@ -62,15 +47,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-
-        chest_day_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ChestDayActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -79,25 +55,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
-
-
-//    private void getRandomWelcomeText() {
-//
-//        int welcomeTextRandNum = new Random().nextInt(maxRandWelcomeText - minRandWelcomeText + 1) + minRandWelcomeText;
-//
-//        if (welcomeTextRandNum == 1) {
-//            welcome_text.setText("Hello King! 👑");
-//        }
-//        if (welcomeTextRandNum == 2) {
-//            welcome_text.setText("Yeah Buddy!");
-//        }
-//        if (welcomeTextRandNum == 3) {
-//            welcome_text.setText("Lightweight, Babe!!!");
-//        }
-//        if (welcomeTextRandNum == 4) {
-//            welcome_text.setText("Nice to see you again, Chad.");
-//        }
-//
-//    }
 
 }

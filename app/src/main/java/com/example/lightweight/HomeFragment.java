@@ -80,13 +80,5 @@ public class HomeFragment extends Fragment {
 
         getRandomWelcomeText();
 
-//        chest_day_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, ChestDayActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
     }
 }
