@@ -1,5 +1,6 @@
 package com.example.lightweight;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -105,6 +106,14 @@ public class PassFragment extends Fragment {
 
         initDatePicker();
 
+        btnSetDateExpires.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datePickerDialog.show();
+            }
+        });
+
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -133,23 +142,35 @@ public class PassFragment extends Fragment {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
                 String date = makeDateString(day, month, year);
+                textDatePassExpires.setText(date);
             }
         };
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, dateSetListener, year, month, day);
     }
 
     private String makeDateString(int day, int month, int year) {
-        return getMonthFormat(month) + ". " + day + ". " + year + ".";
+        return year + ". " + getMonthFormat(month) + " " + day + ".";
     }
 
-    private String getMonthFormat(int month)
-    {
-        if (month == 1) return "JAN";
-        if (month == 2) return "FEB";
+    private String getMonthFormat(int month) {
+        if (month == 1) return "Jan";
+        if (month == 2) return "Feb";
+        if (month == 3) return "Mar";
+        if (month == 4) return "Apr";
+        if (month == 5) return "Maj";
+        if (month == 6) return "Jun";
+        if (month == 7) return "Jul";
+        if (month == 8) return "Aug";
+        if (month == 9) return "Sep";
+        if (month == 10) return "Oct";
+        if (month == 11) return "Nov";
+        if (month == 12) return "Dec";
 
-        return "JAN";
-    }
-
-    public void openDatePicker(View view) {
-
+        return "Jan";
     }
 }
