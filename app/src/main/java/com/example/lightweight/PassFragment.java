@@ -89,7 +89,7 @@ public class PassFragment extends Fragment {
         btnSetDateExpires = view.findViewById(R.id.btnSetDateExpires);
 
         LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy. MM. dd.");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy. LLL. dd.");
         String formattedCurrentDate = currentDate.format(formatter);
         textDateToday.setText(formattedCurrentDate);
 
@@ -154,7 +154,16 @@ public class PassFragment extends Fragment {
     }
 
     private String makeDateString(int day, int month, int year) {
-        return year + ". " + getMonthFormat(month) + " " + day + ".";
+        return year + ". " + getMonthFormat(month) + ". " + day + ".";
+    }
+
+    private String getTodaysDate() {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        month = month + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        return makeDateString(day, month, year);
     }
 
     private String getMonthFormat(int month) {
