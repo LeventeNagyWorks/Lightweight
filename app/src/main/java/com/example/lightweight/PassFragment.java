@@ -136,13 +136,13 @@ public class PassFragment extends Fragment {
     }
 
     private void initDatePicker() {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
-        {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                String date = makeDateString(day, month, year);
-                textDatePassExpires.setText(date);
+                LocalDate selectedDate = LocalDate.of(year, month + 1, day);
+                LocalDate futureDate = selectedDate.plusDays(30);
+                String formattedFutureDate = futureDate.format(DateTimeFormatter.ofPattern("yyyy. MMM. dd."));
+                textDatePassExpires.setText(formattedFutureDate);
             }
         };
         Calendar cal = Calendar.getInstance();
@@ -150,8 +150,10 @@ public class PassFragment extends Fragment {
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
-        datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, dateSetListener, year, month, day);
+        datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_Holo, dateSetListener, year, month, day);
+        datePickerDialog.setTitle("When did you bought the pass?");
     }
+
 
     private String makeDateString(int day, int month, int year) {
         return year + ". " + getMonthFormat(month) + ". " + day + ".";
