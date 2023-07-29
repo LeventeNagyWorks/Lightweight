@@ -1,13 +1,21 @@
 package com.example.lightweight;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -19,6 +27,8 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -100,11 +110,23 @@ public class PassFragment extends Fragment {
                 LocalDate futureDate = today.plusDays(30);
                 String formattedFutureDate = futureDate.format(formatter);
                 textDatePassExpires.setText(String.valueOf(formattedFutureDate));
-            }
 
+                long futureInMillis = LocalDateTime.now().plusDays(23).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+                scheduleNotification(getActivity(), futureInMillis);
+            }
         });
 
+
         initDatePicker();
+
+        datePickerDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                LocalDate expirationDate = LocalDate.parse(textDatePassExpires.getText().toString(), DateTimeFormatter.ofPattern("yyyy. MMM. dd."));
+                long futureInMillis = expirationDate.minusDays(7).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+                scheduleNotification(getActivity(), futureInMillis);
+            }
+        });
 
         btnSetDateExpires.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +138,15 @@ public class PassFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void scheduleNotification(Context context, long futureInMillis) {
+        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, futureInMillis, pendingIntent);
     }
 
     @Override
@@ -145,12 +176,13 @@ public class PassFragment extends Fragment {
                 textDatePassExpires.setText(formattedFutureDate);
             }
         };
+
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
-        datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_Holo, dateSetListener, year, month, day);
+        datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, dateSetListener, year, month, day);
         datePickerDialog.setTitle("When did you bought the pass?");
     }
 
