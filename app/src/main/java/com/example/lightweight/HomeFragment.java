@@ -24,7 +24,7 @@ public class HomeFragment extends Fragment {
     LinearLayout back_biceps_day_button;
     LinearLayout shoulder_triceps_day_button;
 
-    int maxRandWelcomeText = 4;
+    int maxRandWelcomeText = 3;
     int minRandWelcomeText = 1;
 
 
@@ -55,16 +55,13 @@ public class HomeFragment extends Fragment {
         int welcomeTextRandNum = new Random().nextInt(maxRandWelcomeText - minRandWelcomeText + 1) + minRandWelcomeText;
 
         if (welcomeTextRandNum == 1) {
-            welcome_text.setText("Hello King! 👑");
+            welcome_text.setText("Hello!");
         }
         if (welcomeTextRandNum == 2) {
-            welcome_text.setText("Yeah Buddy!");
+            welcome_text.setText("Nice to see you again!");
         }
         if (welcomeTextRandNum == 3) {
-            welcome_text.setText("Lightweight, Babe!!!");
-        }
-        if (welcomeTextRandNum == 4) {
-            welcome_text.setText("Nice to see you again, Chad.");
+            welcome_text.setText("Greetings!");
         }
 
     }
